@@ -1,0 +1,8 @@
+< API 개발환경 셋팅 >
+1. Python3.7.4 설치 (https://www.python.org/downloads/)
+2. Visual Studio Code 설치 (https://code.visualstudio.com/docs/?dv=win)
+3. 콘솔창실행
+pip3 install virtualenv
+virtualenv venv
+venv\scripts\activate
+pip3 install -r requirements.txt

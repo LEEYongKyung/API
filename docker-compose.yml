@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+  api-server:
+    image: orangeaaron/bs-api-server:0.3
+    ports:
+      - "5000:5000"
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: "0.2"
+      restart_policy:
+        condition: on-failure
+    env_file:
+        - "./docker-env.list"
+    networks:
+      - webnet
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - webnet
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: on-failure
+    networks:
+      - webnet
+networks:
+  webnet:
